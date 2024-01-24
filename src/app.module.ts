@@ -6,16 +6,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ServeStaticModule } from '@nestjs/serve-static';
 
 
-import { ProductsModule } from './products/products.module';
 import { CommonModule } from './common/common.module';
 import { SeedModule } from './seed/seed.module';
 import { FilesModule } from './files/files.module';
 import { AuthModule } from './auth/auth.module';
 import { MessagesWsModule } from './messages-ws/messages-ws.module';
-import { AlmacenModule } from './almacen/almacen.module';
-import { InProductsModule } from './in-products/in-products.module';
-import { OutProductsModule } from './out-products/out-products.module';
-import { AlmacenPaymentModule } from './almacen_payment/almacen_payment.module';
+import { DataUserModule } from './data_user/data_user.module';
+
+
 require('dotenv').config();
 const DB_HOST = process.env.DB_HOST;
 const DB_PORT = +process.env.DB_HOST;
@@ -44,7 +42,7 @@ const DB_PASSWORD = process.env.DB_PASSWORD;
       rootPath: join(__dirname,'..','public'), 
     }),
 
-    ProductsModule,
+   
 
     CommonModule,
 
@@ -56,14 +54,7 @@ const DB_PASSWORD = process.env.DB_PASSWORD;
 
     MessagesWsModule,
 
-    AlmacenModule,
-
-    InProductsModule,
-
-    OutProductsModule,
-
-    AlmacenPaymentModule,
-
+    DataUserModule,
   ],
 })
 export class AppModule {}

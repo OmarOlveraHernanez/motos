@@ -1,17 +1,15 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Type } from "class-transformer";
 import { IsString, ValidateNested } from "class-validator";
-import { InProductDto } from "./in-product.dto";
+import { PersonalDto } from "./personal.dto";
 
-export class CreateInProductDto {
-
+export class CreateDataUserDto {
     @ApiProperty()
     @ValidateNested()
-    @Type(() => InProductDto)
-    resource: InProductDto;
-
+    @Type(() => PersonalDto)
+    personal: PersonalDto;
 
     @ApiProperty()
     @IsString()
-    product: string;
+    user: string;
 }

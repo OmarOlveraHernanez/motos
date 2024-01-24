@@ -1,5 +1,5 @@
 import {  Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import { Product } from '../../products/entities';
+
 import { User } from './user.entity';
 
 

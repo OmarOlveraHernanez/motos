@@ -39,14 +39,9 @@ export class CreateUserDto {
     @IsString({ each: true })
     @IsArray()
     @IsOptional()
-    @Matches(new RegExp('^(admin|user|super-user)$', 'i'), { each: true, message: 'Invalid role. Must be admin, user, or super-user' })
+    @Matches(new RegExp('^(admin|user|super)$', 'i'), { each: true, message: 'Invalid role. Must be admin, user, or super-user' })
     roles?: string[];
 
 
-    @ApiProperty()
-    @IsString({ each: true })
-    @IsArray()
-    @IsOptional()
-    almacenes?: string[];
 
 }

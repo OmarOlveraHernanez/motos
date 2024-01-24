@@ -9,7 +9,6 @@ import { User } from './entities/user.entity';
 import { LoginUserDto, CreateUserDto } from './dto';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
 import { LoginUser } from './entities/login.entity';
-import { Almacen } from 'src/almacen/entities/almacen.entity';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import { isUUID } from 'class-validator';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -22,8 +21,7 @@ export class AuthService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     
-    @InjectRepository(Almacen)
-    private readonly alamcenRepository: Repository<Almacen>,
+    
 
     @InjectRepository(LoginUser)
     private readonly loginUserRepository: Repository<LoginUser>,
@@ -39,14 +37,34 @@ export class AuthService {
     }
   }
 
+  async change_status(id: string){
+    const user = await this.userRepository
+    .createQueryBuilder('u')
+    .where('u.id = :id', { id: id })
+    .getOne();
+    if (!user) {
+      // Manejar el caso en el que no se encuentra el usuario con el ID proporcionado
+      throw new Error(`Usuario con ID ${id} no encontrado.`);
+    }
+    user.isActive = !user.isActive;
 
+    // Guardar los cambios en la base de datos
+    await this.userRepository.save(user);
+    return this.findOnePlain( id );
+  }
 
   async update( id: string, UpdateUserDto: UpdateUserDto ) {
   
-    const { password , almacenes ,...toUpdate } = UpdateUserDto;
+    const { password , ...toUpdate } = UpdateUserDto;
+    let updatedFields:any  = null;
+     updatedFields = { id, ...toUpdate };
 
-
-    const user = await this.userRepository.preload({ id, ...toUpdate, password: bcrypt.hashSync( password, 10 ) });
+    // Check if a new password is provided
+    if (password) {
+      updatedFields.password = bcrypt.hashSync(password, 10);
+    }
+    const user = await this.userRepository.preload(updatedFields);
+    //const user = await this.userRepository.preload({ id, ...toUpdate, password: bcrypt.hashSync( password, 10 ) });
 
     if ( !user ) throw new NotFoundException(`Product with id: ${ id } not found`);
 
@@ -84,7 +102,6 @@ export class AuthService {
       //product = await this.productRepository.findOneBy({ id: term });
       user = await this.userRepository
       .createQueryBuilder('u')
-      .leftJoinAndSelect('u.almacenes', 'Almacenes')
       .where('u.id = :id', { id: term })
       .getOne();;
     } else {
@@ -93,8 +110,6 @@ export class AuthService {
       .where("UPPER(u.resource->>'fullName') LIKE UPPER(:term) OR UPPER(u.resource->>'direction') LIKE UPPER(:term) OR UPPER(u.resource->>'phone') LIKE UPPER(:term)  OR u.email LIKE :term", {
         term: `%${term}%`,
       })
-        .leftJoinAndSelect('u.almacenes', 'Almacenes')
-        
         .getOne();
     }
 
@@ -113,10 +128,7 @@ export class AuthService {
     if(!term)
     users = await this.userRepository.find({
       take: limit,
-      skip: offset,
-      relations: {
-        almacenes: true,
-      }
+      skip: offset
     });
     else{
       const queryBuilder = this.userRepository.createQueryBuilder('u'); 
@@ -141,16 +153,12 @@ export class AuthService {
     
     try {
 
-      const { password, almacenes , ...userData } = createUserDto;
-      let almacenes_entity = [];
-      if(almacenes){
-        almacenes_entity = await this.alamcenRepository.findBy({ id: In(almacenes ) })
-      }
+      const { password , ...userData } = createUserDto;
+     
 
       const user = this.userRepository.create({
         ...userData,
-        password: bcrypt.hashSync( password, 10 ),
-        almacenes: almacenes_entity
+        password: bcrypt.hashSync( password, 10 )
       });
 
       await this.userRepository.save( user )
@@ -175,7 +183,7 @@ export class AuthService {
     const user = await this.userRepository.findOne({
       where: { email },
       select: { email: true, password: true, id: true }, //! OJO!,
-      relations: ["almacenes"]
+     
     });
 
     if ( !user ) 
@@ -187,7 +195,7 @@ export class AuthService {
     const login_user = this.loginUserRepository.create(loginUser);
    
     const response_log: any = await this.loginUserRepository.save(login_user)
-    
+    delete user.password;
     return {
       ...user,
       token: this.getJwtToken({ id: user.id ,id_log: response_log.id})

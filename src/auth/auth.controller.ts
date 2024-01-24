@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, UseGuards, Req, Headers, Query, Param, Patch, ParseUUIDPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Req, Headers, Query, Param, Patch, ParseUUIDPipe, Delete } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
@@ -21,6 +21,17 @@ export class AuthController {
   constructor(private readonly authService: AuthService,
     
     ) {}
+
+
+  @Delete('change_status/:id')
+  @Auth(  ValidRoles.superUser )
+  @ApiBearerAuth()
+  changeStatus(
+  @Param('id', ParseUUIDPipe ) id: string, 
+
+    ) {
+      return this.authService.change_status(id)
+    }
 
 
   @Patch(':id')
