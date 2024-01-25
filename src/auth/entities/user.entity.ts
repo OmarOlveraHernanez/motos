@@ -1,5 +1,6 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { BeforeInsert, BeforeUpdate, Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { LoginUser } from './login.entity';
+import { DataUser } from 'src/data_user/entities/data_user.entity';
 
 
 @Entity('users')
@@ -59,6 +60,11 @@ export class User {
         loginUser => loginUser.user)
 
     loginUsers: LoginUser;
+
+
+    @OneToOne(() => DataUser, data_user => data_user.user, { cascade: true })
+    @JoinColumn()
+    data_user: DataUser;
 
     
 

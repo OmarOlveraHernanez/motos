@@ -9,6 +9,7 @@ import { AuthController } from './auth.controller';
 import { User } from './entities/user.entity';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { LoginUser } from './entities/login.entity';
+import { DataUser } from 'src/data_user/entities/data_user.entity';
 
 
 @Module({
@@ -17,7 +18,7 @@ import { LoginUser } from './entities/login.entity';
   imports: [
     ConfigModule,
 
-    TypeOrmModule.forFeature([ User , LoginUser ]),
+    TypeOrmModule.forFeature([ User , LoginUser ,DataUser ]),
 
     PassportModule.register({ defaultStrategy: 'jwt' }),
 
