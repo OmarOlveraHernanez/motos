@@ -2,7 +2,9 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { DataUserService } from './data_user.service';
 import { CreateDataUserDto } from './dto/create-data_user.dto';
 import { UpdateDataUserDto } from './dto/update-data_user.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('data_user')
 @Controller('data-user')
 export class DataUserController {
   constructor(private readonly dataUserService: DataUserService) {}
