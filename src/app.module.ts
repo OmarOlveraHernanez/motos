@@ -12,6 +12,7 @@ import { FilesModule } from './files/files.module';
 import { AuthModule } from './auth/auth.module';
 import { MessagesWsModule } from './messages-ws/messages-ws.module';
 import { DataUserModule } from './data_user/data_user.module';
+import { HubModule } from './hub/hub.module';
 
 
 require('dotenv').config();
@@ -55,6 +56,8 @@ const DB_PASSWORD = process.env.DB_PASSWORD;
     MessagesWsModule,
 
     DataUserModule,
+
+    HubModule,
   ],
 })
 export class AppModule {}

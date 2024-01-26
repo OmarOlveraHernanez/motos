@@ -12,8 +12,6 @@ export class MedicalDto {
     @IsNotEmpty()
     @ApiProperty()
     @IsBoolean()
-    @MinLength(5)
-    @MaxLength(150)
     visible: boolean;
 
     @ApiProperty()
@@ -33,16 +31,16 @@ export class MedicalDto {
     @IsString({ each: true })
     @IsArray()
     @IsOptional()
-    @MinLength(5)
-    @MaxLength(100)
+    @MinLength(2,{ each: true })
+    @MaxLength(220,{ each: true })
     allergies?: string[];
 
     @ApiProperty()
     @IsString({ each: true })
     @IsArray()
     @IsOptional()
-    @MinLength(5)
-    @MaxLength(100)
+    @MinLength(2,{ each: true })
+    @MaxLength(220,{ each: true })
     medicines?: string[];
 
 
@@ -50,8 +48,8 @@ export class MedicalDto {
     @IsString({ each: true })
     @IsArray()
     @IsOptional()
-    @MinLength(5)
-    @MaxLength(100)
+    @MinLength(2,{ each: true })
+    @MaxLength(220,{ each: true })
     diseases?: string[];
 
 
@@ -59,8 +57,8 @@ export class MedicalDto {
     @IsString({ each: true })
     @IsArray()
     @IsOptional()
-    @MinLength(5)
-    @MaxLength(100)
+    @MinLength(2,{ each: true })
+    @MaxLength(220,{ each: true })
     surgeries?: string[];
 
 
@@ -68,8 +66,8 @@ export class MedicalDto {
     @IsString({ each: true })
     @IsArray()
     @IsOptional()
-    @MinLength(5)
-    @MaxLength(100)
+    @MinLength(2,{ each: true })
+    @MaxLength(220,{ each: true })
     health_problems?: string[];
     
 
@@ -77,8 +75,8 @@ export class MedicalDto {
     @IsString({ each: true })
     @IsArray()
     @IsOptional()
-    @MinLength(5)
-    @MaxLength(100)
+    @MinLength(2,{ each: true })
+    @MaxLength(220,{ each: true })
     background_fam?: string[];
 
 
@@ -86,8 +84,8 @@ export class MedicalDto {
     @IsString({ each: true })
     @IsArray()
     @IsOptional()
-    @MinLength(5)
-    @MaxLength(100)
+    @MinLength(2,{ each: true })
+    @MaxLength(220,{ each: true })
     vaccines?: string[];
    
 

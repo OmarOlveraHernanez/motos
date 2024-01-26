@@ -23,7 +23,7 @@ export class PersonalDto {
     @IsString()
     @IsOptional()
     @MinLength(5)
-    @MaxLength(150)
+    @MaxLength(200)
     actual_direction?: string;
 
     @ApiProperty()
@@ -48,8 +48,8 @@ export class PersonalDto {
     @IsString({ each: true })
     @IsArray()
     @IsOptional()
-    @MinLength(5)
-    @MaxLength(50)
+    @MinLength(5, { each: true })
+    @MaxLength(200, { each: true })
     nationalities?: string[];
    
 
