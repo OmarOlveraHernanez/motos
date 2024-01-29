@@ -13,6 +13,7 @@ import { AuthModule } from './auth/auth.module';
 import { MessagesWsModule } from './messages-ws/messages-ws.module';
 import { DataUserModule } from './data_user/data_user.module';
 import { HubModule } from './hub/hub.module';
+import { PendingMotorcycleModule } from './pending_motorcycle/pending_motorcycle.module';
 
 
 require('dotenv').config();
@@ -58,6 +59,8 @@ const DB_PASSWORD = process.env.DB_PASSWORD;
     DataUserModule,
 
     HubModule,
+
+    PendingMotorcycleModule,
   ],
 })
 export class AppModule {}

@@ -24,7 +24,7 @@ export class CreateHubDto {
     @ApiProperty()
     @IsString({ each: true })
     @IsArray()
-    @IsOptional()
-    users?: string[];
+    @IsNotEmpty()
+    users: string[];
 
 }

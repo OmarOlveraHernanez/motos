@@ -9,6 +9,10 @@ import { IsArray, IsBoolean, IsEmail, IsIn, IsInt, IsNotEmpty, IsNumber, IsOptio
 export class HubDto {
     
 
+    @IsNotEmpty()
+    @ApiProperty()
+    @IsBoolean()
+    isActive: boolean;
 
     @ApiProperty()
     @IsString()
@@ -32,6 +36,9 @@ export class HubDto {
     @MinLength(5)
     @MaxLength(200)
     location?: string;
+
+
+    
     
 
     count_members: number;

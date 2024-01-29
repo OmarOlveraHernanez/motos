@@ -13,7 +13,7 @@ export class ConfigDto {
     @ApiProperty()
     @IsString()
     @IsOptional()
-    @MinLength(5)
+    @MinLength(2)
     @MaxLength(100)
     color?: string;
 
@@ -25,7 +25,7 @@ export class ConfigDto {
     @MaxLength(150)
     logo?: string;
 
-    
+
 
 
 
