@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Hub } from "src/hub/entities/hub.entity";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('pending_motorcycles')
 export class PendingMotorcycle {
@@ -8,6 +9,18 @@ export class PendingMotorcycle {
 
     @Column("json", { nullable: true })
     resource: any;
+    
+    @Column({
+        type: 'timestamp',
+        nullable: true
+       })
+    accepted: Date;
+
+    @Column({
+        type: 'timestamp',
+        nullable: true
+       })
+    vigency: Date;
 
     @Column({
         type: 'timestamp', 
@@ -19,4 +32,13 @@ export class PendingMotorcycle {
         type: 'timestamp', 
         default: () => 'CURRENT_TIMESTAMP' })
     updatedAt: Date;
+
+    @ManyToOne(
+        () => Hub,
+        hub => hub.pending_motorcycle,
+        { eager: true }
+        )
+    hub: Hub;
+
+
 }

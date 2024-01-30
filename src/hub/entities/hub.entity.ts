@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { PendingMotorcycle } from "src/pending_motorcycle/entities/pending_motorcycle.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('hubs')
 export class Hub {
@@ -22,6 +23,12 @@ export class Hub {
         type: 'timestamp', 
         default: () => 'CURRENT_TIMESTAMP' })
     updatedAt: Date;
+    
 
+    @OneToMany(
+        () => PendingMotorcycle, 
+        pending_motorcycle => pending_motorcycle.hub)
+
+    pending_motorcycle: PendingMotorcycle;
 
 }
