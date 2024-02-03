@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 import { IsArray, IsEmail,  IsOptional, 
+          IsPhoneNumber, 
           IsString, Matches, MinLength, ValidateIf, ValidationArguments, ValidatorConstraint, ValidatorConstraintInterface 
 } from 'class-validator';
 import { AtLeastOne } from './atleastone.dto';
@@ -16,6 +17,12 @@ export class PendingMotorcycleDto {
     @IsString()
     @IsEmail()
     email: string;
+
+    @ApiProperty()
+    @IsString()
+    @IsOptional()
+    @IsPhoneNumber(null, { message: 'Please enter a valid phone number' })
+    phone?: string;
 
 
     @ApiProperty()

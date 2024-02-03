@@ -2,7 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { PendingMotorcycleService } from './pending_motorcycle.service';
 import { CreatePendingMotorcycleDto } from './dto/create-pending_motorcycle.dto';
 import { UpdatePendingMotorcycleDto } from './dto/update-pending_motorcycle.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+
+@ApiTags('pending-motorcycle')
 @Controller('pending-motorcycle')
 export class PendingMotorcycleController {
   constructor(private readonly pendingMotorcycleService: PendingMotorcycleService) {}
